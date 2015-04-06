@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src='http://terminal.jcubic.pl/js/jquery.terminal-0.8.8.min.js'></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    <link href='http://terminal.jcubic.pl/css/jquery.terminal.css' rel="stylesheet">
+    <style>
+        html, body, .full-height, #terminal, #sidebar {
+            overflow: hidden;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #sidebar {
+            background-color: #40c3b0;
+        }
+        #terminal {
+            background-color: black;
+        }
+
+    </style>
+    <script type="text/javascript">
+
+
+jQuery(function($, undefined) {
+    $('#terminal').terminal(function(command, term) {
+        if (command == 'vagrant ssh'){
+            term.echo(new String('Congratulations!'));
+        }
+        else if (command !== '') {
+            try {
+                var result = window.eval(command);
+                if (result !== undefined) {
+                    term.echo(new String(result));
+                }
+            } catch(e) {
+                term.error(new String(e));
+            }
+        } else {
+           term.echo('');
+        }
+    }, {
+        greetings: 'Welcome to Aurora!\nYou just made the first step toward making your deployment (and life) easier!\n\n',
+        name: 'js_demo',
+        prompt: '>> '});
+});
+
+    </script>
+</head>
+<body>
+    <div class='container-fluid full-height'>
+        <div class='row full-height'>
+
+            <!-- side column -->
+            <div class='col-md-3' id='sidebar'>
+                <h1>Apache Aurora tutorial</h1>
+
+                Run <code>vagrant ssh</code> to SSH into your box!
+            </div>
+            
+            <!-- terminal -->
+            <div class='col-md-9 full-height'>
+                <div id='terminal' class='full-height'></div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
+
+
